@@ -12,6 +12,7 @@
 
 #include <efi.h>
 #include <csmwrap.h>
+#include <io.h>
 
 static void _putchar(int character, void *extra_arg) {
     (void)extra_arg;
@@ -23,6 +24,8 @@ static void _putchar(int character, void *extra_arg) {
     CHAR16 string[2];
     string[0] = character;
     string[1] = 0;
+
+    outb(0xe9, character);
 
     if (!gST->ConOut || !gST->ConOut->OutputString) {
         /* No console output available */
